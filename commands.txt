@@ -4,6 +4,7 @@ sudo sysctl -w net.ipv4.ip_forward=1
 
 TERMINAL 1
 nano arp_spoof.py
+// change the ip address in code
 // paste the code
 sudo python3 arp_spoof.py
 
