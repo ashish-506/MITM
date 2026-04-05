@@ -36,10 +36,8 @@ def start_client():
             print(f"[*] Streaming {len(df)} rows...\n")
             
             for index, row in df.iterrows():
-                payload = {
-                    "sensor_id": "Grid_Node_01",
-                    "data": row.to_dict() # .to_dict() automatically headers ko JSON keys me map kar deta hai
-                }
+                payload = row.to_dict() # .to_dict() automatically headers ko JSON keys me map kar deta hai
+                
                 
                 json_payload = json.dumps(payload) + '\n' 
                 s.sendall(json_payload.encode('utf-8'))
