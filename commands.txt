@@ -1,0 +1,17 @@
+sudo apt update && sudo apt install python3-scapy iptables build-essential python3-dev libnetfilter-queue-dev python3-pip git -y
+sudo pip3 install NetfilterQueue --break-system-packages
+sudo sysctl -w net.ipv4.ip_forward=1
+
+TERMINAL 1
+nano arp_spoof.py
+// paste the code
+sudo python3 arp_spoof.py
+
+TERMINAL 2
+sudo iptables -I FORWARD -p tcp --dport 9090 -j NFQUEUE --queue-num 1
+nano fdi_attack.py
+// paste the code
+sudo python3 fdi_attack.py
+
+// to switch off attack laptop
+sudo iptables -F
